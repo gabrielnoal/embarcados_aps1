@@ -30,9 +30,11 @@
  */
 #include <asf.h>
 
+#include "pitches.h"
 #include "gfx_mono_ug_2832hsweg04.h"
 #include "gfx_mono_text.h"
 #include "sysfont.h"
+
 
 /************************************************************************/
 /* defines                                                              */
@@ -84,6 +86,12 @@
 #define OLED_BUT3_PIO_IDX 19
 #define OLED_BUT3_PIO_IDX_MASK (1 << OLED_BUT3_PIO_IDX)
 
+//BUZZER
+#define BUZZER_PIO             PIOC
+#define BUZZER_PIO_ID          ID_PIOC
+#define BUZZER_PIO_IDX         13	
+#define BUZZER_PIO_IDX_MASK    (1 << BUZZER_PIO_IDX)
+
 /************************************************************************/
 /* constants                                                            */
 /************************************************************************/
@@ -132,6 +140,13 @@ component nextButton = {
 	OLED_BUT3_PIO_IDX_MASK,
 };
 
+component buzzer = {
+	BUZZER_PIO,
+	BUZZER_PIO_ID,
+	BUZZER_PIO_IDX,
+	BUZZER_PIO_IDX_MASK,
+};
+
 typedef struct {
 	component buttons[3];
 	component leds[3];
@@ -139,27 +154,57 @@ typedef struct {
 
 typedef void (*voidFunction)(void);
 
+typedef struct {
+	int melody[];
+	int duration[];
+	int songspeed;
+	int size;
+} music;
+
+music music1 = {
+  melody1,
+  duration1,
+  1.5,
+  203
+}
+
+music music2 = {
+  melody2,
+  duration2,
+  1.5,
+  20
+};
+
+music music3 = {
+  melody3,
+  duration3,
+  50,
+  78
+};
+
 /************************************************************************/
 /* variaveis globais                                                    */
 /************************************************************************/
 
 volatile int play;
 volatile int musicIndex;
-
+volatile int musicNote;
 /************************************************************************/
 /* prototypes                                                           */
 /************************************************************************/
 
 void init(void);
-void prevButtonFunction(void);
-void playButtonFunction(void);
-void nextButtonFunction(void);
-void enebleAllPeriph(int periphIdsList[], int size);
-void configureLeds(component leds[], int size);
-void configureButtons(component buttons[], int size);
-void turnOnLED(component led);
-void turnOffLED(component led);
 void changeMusic(int index);
+void configureButtons(component buttons[], int size);
+void configureBuzzer(void);
+void configureLeds(component leds[], int size);
+void enebleAllPeriph(int periphIdsList[], int size);
+void nextButtonFunction(void);
+void playButtonFunction(void);
+void playMusic(music atualMusic);
+void prevButtonFunction(void);
+void turnOffLED(component led);
+void turnOnLED(component led);
 void writeLCD(void);
 
 /************************************************************************/
@@ -208,6 +253,7 @@ void nextButtonFunction(void) {
 }
 
 void changeMusic(int next){
+	musicNote = 0;
 	if (next){
 		if (musicIndex == 2){
 			musicIndex = 0;
@@ -222,12 +268,11 @@ void changeMusic(int next){
 		}
 	}
 }
+
 /************************************************************************/
 /* funcoes                                                              */
 /************************************************************************/
 void enebleAllPeriph(int periphIdsList[], int size){
-
-	
 	for (int i = 0; i <size; i++)
 	{
 		pmc_enable_periph_clk(periphIdsList[i]);
@@ -273,6 +318,31 @@ void configureButtons(component buttons[], int size){
 	}
 }
 
+void configureBuzzer(void){
+	pio_set_output(buzzer.pio,buzzer.mask,0,0,0);
+	pio_configure(buzzer.pio, PIO_OUTPUT_0, buzzer.mask, PIO_DEFAULT);
+
+}
+
+int playMusic(music atualMusic){
+	int duration[] = atualMusic.duration
+	int speed = atualMusic.songspeed
+	int size = atualMusic.size
+	while (musicNote < size && play) {
+		int wait = duration[musicNote] * speed;
+		int frequency = atualMusic.melody[musicNote];
+		for(int step = 0 ; step < wait ; step++){
+			pio_set(BUZZER_PIO,BUZZER_PIO_IDX_MASK);
+			delay_us(1000000/frequency/2);
+			pio_clear(BUZZER_PIO,BUZZER_PIO_IDX_MASK);
+			delay_us(1000000/frequency/2);
+		}
+		delay_us(wait);
+		musicNote += 1
+	}
+	return 0;
+}
+
 // Função de inicialização do uC
 void init(void){
 	board_init();
@@ -311,25 +381,33 @@ void init(void){
 	//Configura os botões
 	configureButtons(myBoardComponents.buttons, 3);
 	
+	//Configura o buzzer
+	configureBuzzer();
+
 	play = 0;
 	musicIndex = 0;
-	
+	musicNote = 0;
+
 	delay_init();
 	//Init OLED Screen
 	gfx_mono_ssd1306_init();
-
 }
 
 /************************************************************************/
 /* Main                                                                 */
 /************************************************************************/
-int main (void)
-{
+int main (void) {
 	init();
-	playButtonFunction();
 
-  /* Insert application code here, after the board has been initialized. */
+	music musics[3] = {
+  		music1,
+  		music2,
+  		music3
+	};
 	while(1) {
-
-	}
+		if (play) {
+			playMusic(musics[musicIndex])
+		};
+	};
+	return 0;
 }
