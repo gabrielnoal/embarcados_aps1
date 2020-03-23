@@ -155,8 +155,8 @@ typedef struct {
 typedef void (*voidFunction)(void);
 
 typedef struct {
-	int melody[];
-	int duration[];
+	int melody[205];
+	int duration[205];
 	int songspeed;
 	int size;
 } music;
@@ -166,7 +166,7 @@ music music1 = {
   duration1,
   1.5,
   203
-}
+};
 
 music music2 = {
   melody2,
@@ -201,7 +201,7 @@ void configureLeds(component leds[], int size);
 void enebleAllPeriph(int periphIdsList[], int size);
 void nextButtonFunction(void);
 void playButtonFunction(void);
-void playMusic(music atualMusic);
+int playMusic(music atualMusic);
 void prevButtonFunction(void);
 void turnOffLED(component led);
 void turnOnLED(component led);
@@ -325,9 +325,9 @@ void configureBuzzer(void){
 }
 
 int playMusic(music atualMusic){
-	int duration[] = atualMusic.duration
-	int speed = atualMusic.songspeed
-	int size = atualMusic.size
+	int duration[] = atualMusic.duration;
+	int speed = atualMusic.songspeed;
+	int size = atualMusic.size;
 	while (musicNote < size && play) {
 		int wait = duration[musicNote] * speed;
 		int frequency = atualMusic.melody[musicNote];
@@ -338,7 +338,7 @@ int playMusic(music atualMusic){
 			delay_us(1000000/frequency/2);
 		}
 		delay_us(wait);
-		musicNote += 1
+		musicNote += 1;
 	}
 	return 0;
 }
@@ -406,7 +406,7 @@ int main (void) {
 	};
 	while(1) {
 		if (play) {
-			playMusic(musics[musicIndex])
+			playMusic(musics[musicIndex]);
 		};
 	};
 	return 0;

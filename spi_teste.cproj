@@ -590,6 +590,9 @@
     <Compile Include="src\gfx_mono_ug_2832hsweg04.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\pitches.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ssd1306.c">
       <SubType>compile</SubType>
     </Compile>

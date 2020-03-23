@@ -91,7 +91,7 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-int melody1[] = {       
+int melody1[203] = {       
    NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
    NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
    NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
@@ -145,7 +145,7 @@ int melody1[] = {
    NOTE_B4, NOTE_C5, 0, NOTE_B4, 0, NOTE_A4
 };
 //*****************************************
-int duration1[] = {         //duration of each note (in ms) Quarter Note is set to 250 ms
+int duration1[203] = {         //duration of each note (in ms) Quarter Note is set to 250 ms
   125, 125, 250, 125, 125, 
   125, 125, 250, 125, 125,
   125, 125, 250, 125, 125,
@@ -199,14 +199,14 @@ int duration1[] = {         //duration of each note (in ms) Quarter Note is set 
   125, 125, 125, 125, 125, 500
 };
 
-int melody2[] = {
+int melody2[20] = {
 	NOTE_A4, NOTE_A4, NOTE_A4, NOTE_F4,
     NOTE_C5, NOTE_A4, NOTE_F4, NOTE_C5,
     NOTE_A4, 0, NOTE_E5, NOTE_E5,
     NOTE_E5, NOTE_F5, NOTE_C5, NOTE_GS4,
     NOTE_F4, NOTE_C5, NOTE_A4, 0
 };
-int duration2[] = {
+int duration2[20] = {
 	500,500,500,350,
     150,500,350,150,
     650,500,500,500,
@@ -214,7 +214,7 @@ int duration2[] = {
     350,150,650,500
 };
 
-int melody3[] = {
+int melody3[78] = {
 	NOTE_E7, NOTE_E7, 0, NOTE_E7,
 	0, NOTE_C7, NOTE_E7, 0,
 	NOTE_G7, 0, 0,  0,
@@ -241,7 +241,7 @@ int melody3[] = {
 	NOTE_D7, NOTE_B6, 0, 0
 };
 
-int duration3[] = {
+int duration3[78] = {
 	12, 12, 12, 12,
 	12, 12, 12, 12,
 	12, 12, 12, 12,
