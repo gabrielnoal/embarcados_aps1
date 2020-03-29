@@ -325,9 +325,9 @@ void configureBuzzer(void){
 }
 
 int playMusic(music atualMusic){
-	int duration[] = atualMusic.duration;
-	int speed = atualMusic.songspeed;
-	int size = atualMusic.size;
+	int duration[] = {atualMusic.duration};
+	int speed = {atualMusic.songspeed};
+	int size = {atualMusic.size};
 	while (musicNote < size && play) {
 		int wait = duration[musicNote] * speed;
 		int frequency = atualMusic.melody[musicNote];
@@ -406,7 +406,7 @@ int main (void) {
 	};
 	while(1) {
 		if (play) {
-			playMusic(musics[musicIndex]);
+			//playMusic(musics[musicIndex]);
 		};
 	};
 	return 0;

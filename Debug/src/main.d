@@ -161,7 +161,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam/utils/fpu/fpu.h \
  ../src/ASF/sam/boards/same70_xplained/led.h \
  ../src/ASF/sam/drivers/spi/spi.h \
- ../src/ASF/sam/drivers/pio/pio_handler.h \
+ ../src/ASF/sam/drivers/pio/pio_handler.h ../src/pitches.h \
  ../src/gfx_mono_ug_2832hsweg04.h ../src/ssd1306.h \
  ../src/config/conf_board.h ../src/gfx_mono.h ../src/gfx_mono_generic.h \
  ../src/gfx_mono_framebuffer.h ../src/gfx_mono_text.h ../src/sysfont.h \
@@ -500,6 +500,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam/drivers/spi/spi.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
+
+../src/pitches.h:
 
 ../src/gfx_mono_ug_2832hsweg04.h:
 
