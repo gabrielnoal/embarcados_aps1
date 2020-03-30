@@ -404,9 +404,15 @@ int main (void) {
   		music2,
   		music3
 	};
+	
+	play = 0;
+	
+	musicIndex = 0;
 	while(1) {
-		if (play) {
-			//playMusic(musics[musicIndex]);
+		if (pio_get(BUT_PIO,PIO_OUTPUT_0,BUT_PIO_IDX_MASK)) {
+			play = !play;
+			nextButton();
+			playMusic(musics[musicIndex]);
 		};
 	};
 	return 0;
