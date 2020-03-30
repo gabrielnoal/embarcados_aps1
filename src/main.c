@@ -222,7 +222,7 @@ void writeLCD(void){
 	char string[128];
 	if (play){
 		sprintf(string, "Musica: %d", musicIndex + 1);
-		} else {
+	} else {
 		sprintf(string, "Pause     ");
 	}
 	gfx_mono_draw_string(string, 0,16, &sysfont);
@@ -398,7 +398,7 @@ void init(void){
 /************************************************************************/
 int main (void) {
 	init();
-
+	writeLCD();
 	music musics[3] = {
   		music1,
   		music2,
@@ -406,7 +406,7 @@ int main (void) {
 	};
 	while(1) {
 		if (play) {
-			//playMusic(musics[musicIndex]);
+			playMusic(musics[musicIndex]);
 		};
 	};
 	return 0;
