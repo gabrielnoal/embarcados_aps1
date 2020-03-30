@@ -222,7 +222,7 @@ void writeLCD(void){
 	char string[128];
 	if (play){
 		sprintf(string, "Musica: %d", musicIndex + 1);
-		} else {
+	} else {
 		sprintf(string, "Pause     ");
 	}
 	gfx_mono_draw_string(string, 0,16, &sysfont);
@@ -398,7 +398,7 @@ void init(void){
 /************************************************************************/
 int main (void) {
 	init();
-
+	writeLCD();
 	music musics[3] = {
   		music1,
   		music2,
@@ -409,9 +409,13 @@ int main (void) {
 	
 	musicIndex = 0;
 	while(1) {
+<<<<<<< HEAD
 		if (pio_get(BUT_PIO,PIO_OUTPUT_0,BUT_PIO_IDX_MASK)) {
 			play = !play;
 			nextButton();
+=======
+		if (play) {
+>>>>>>> aac3bc21d7d542e094ddf54fc84f20d0b4c8a1c0
 			playMusic(musics[musicIndex]);
 		};
 	};
