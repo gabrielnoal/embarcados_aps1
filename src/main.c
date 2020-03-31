@@ -155,32 +155,12 @@ typedef struct {
 typedef void (*voidFunction)(void);
 
 typedef struct {
-	int melody[205];
-	int duration[205];
-	int songspeed;
+	int *melody;
+	int *duration;
+	float songspeed;
 	int size;
 } music;
 
-music music1 = {
-  melody1,
-  duration1,
-  1.5,
-  203
-};
-
-music music2 = {
-  melody2,
-  duration2,
-  1.5,
-  20
-};
-
-music music3 = {
-  melody3,
-  duration3,
-  50,
-  78
-};
 
 /************************************************************************/
 /* variaveis globais                                                    */
@@ -201,7 +181,7 @@ void configureLeds(component leds[], int size);
 void enebleAllPeriph(int periphIdsList[], int size);
 void nextButtonFunction(void);
 void playButtonFunction(void);
-int playMusic(music atualMusic);
+int playMusic();
 void prevButtonFunction(void);
 void turnOffLED(component led);
 void turnOnLED(component led);
@@ -325,21 +305,31 @@ void configureBuzzer(void){
 }
 
 int playMusic(music atualMusic){
-	int duration[] = {atualMusic.duration};
-	int speed = {atualMusic.songspeed};
-	int size = {atualMusic.size};
-	while (musicNote < size && play) {
-		int wait = duration[musicNote] * speed;
+	int atualMusicIndex = musicIndex;
+	while (musicNote < atualMusic.size && play) {
+		int wait = atualMusic.duration[musicNote] * atualMusic.songspeed;
 		int frequency = atualMusic.melody[musicNote];
-		for(int step = 0 ; step < wait ; step++){
+		for(int step = 0; step < wait; step++){
 			pio_set(BUZZER_PIO,BUZZER_PIO_IDX_MASK);
 			delay_us(1000000/frequency/2);
 			pio_clear(BUZZER_PIO,BUZZER_PIO_IDX_MASK);
 			delay_us(1000000/frequency/2);
 		}
 		delay_us(wait);
-		musicNote += 1;
+		if (atualMusicIndex != musicIndex)
+		{
+			musicNote = 0;
+			return 0;
+		} else {
+			musicNote += 1;
+		}
+
 	}
+	if (play) {
+		changeMusic(1);
+		writeLCD();
+	}
+
 	return 0;
 }
 
@@ -398,24 +388,39 @@ void init(void){
 /************************************************************************/
 int main (void) {
 	init();
+	play = 1;
+	musicIndex = 1;
 	writeLCD();
+	
+	music music1 = {
+	  &melody1,
+	  &duration1,
+	  1.5,
+	  203
+	};
+
+	music music2 = {
+	  &melody2,
+	  &duration2,
+	  1,
+	  20
+	};
+
+	music music3 = {
+	  &melody3,
+	  &duration3,
+	  50,
+	  78
+	};
+
 	music musics[3] = {
-  		music1,
-  		music2,
-  		music3
+		music1,
+		music2,
+		music3
 	};
 	
-	play = 0;
-	
-	musicIndex = 0;
 	while(1) {
-<<<<<<< HEAD
-		if (pio_get(BUT_PIO,PIO_OUTPUT_0,BUT_PIO_IDX_MASK)) {
-			play = !play;
-			nextButton();
-=======
 		if (play) {
->>>>>>> aac3bc21d7d542e094ddf54fc84f20d0b4c8a1c0
 			playMusic(musics[musicIndex]);
 		};
 	};
