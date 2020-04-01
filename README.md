@@ -35,6 +35,7 @@ Módulos :
         - BUT1 : PD28
         - BUT2 : PC31
         - BUT3 : PA19
+    
     - BUZZER :
         - + : PC13
         - : GND
