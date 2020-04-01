@@ -23,8 +23,8 @@ Módulos :
 
 # Estruturação
 
-    - O projeto foi estruturado a partir de uma pasta fornecida pelo professor, a qual somente o arquivo main.c foi alterado
-    , enquanto o pitches.h foi adicionado.
+    - O projeto foi estruturado a partir de uma pasta fornecida pelo professor, a qual somente o arquivo main.c foi 
+    alterado, enquanto o pitches.h foi adicionado.
 
 ## Diagrama
 
