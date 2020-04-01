@@ -17,13 +17,13 @@ Módulos :
 
 ## Diagrama
 
-OLED :
-    - LED1 : PA0
-    - LED2 : PC30
-    - LED3 : PB2
-    - BUT1 : PD28
-    - BUT2 : PC31
-    - BUT3 : PA19
+#OLED :
+#    - LED1 : PA0
+#    - LED2 : PC30
+#    - LED3 : PB2
+#    - BUT1 : PD28
+#    - BUT2 : PC31
+#    - BUT3 : PA19
 BUZZER :
     + : PC13
     - : GND
